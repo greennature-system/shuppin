@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>出品登録</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="出品登録">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0b0d12">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+  html, body { margin: 0; height: 100%; background: #0b0d12; }
+  body {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);   /* 画面上の時計・電池の下から表示する */
+    display: flex; flex-direction: column;
+  }
+  iframe { flex: 1; width: 100%; border: 0; background: #fff; display: block; }
+  .splash {
+    position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 18px; background: #0b0d12; color: #9aa0ad; font: 14px -apple-system, "Hiragino Sans", sans-serif;
+    transition: opacity .3s;
+  }
+  .splash img { width: 96px; height: 96px; border-radius: 22px; }
+  .splash.hide { opacity: 0; pointer-events: none; }
+  .err { color: #ff8a1f; text-align: center; padding: 0 24px; line-height: 1.7; }
+</style>
+</head>
+<body>
+<iframe id="app" title="出品登録" allow="camera; clipboard-write"></iframe>
+<div class="splash" id="splash">
+  <img src="apple-touch-icon.png" alt="">
+  <div id="msg">読み込み中…</div>
+</div>
+<script>
+  // ▼▼▼ ここに出品登録アプリのURL（…/exec で終わるもの）を貼る ▼▼▼
+  const APP_URL = 'https://script.google.com/macros/s/AKfycbxidKwGSE5msWVBZRMEXspb0zm8pBOMGDUAgGKeEo1IfTVEslejuz_xYg_DjFAgD9rnSA/exec';
+  // ▲▲▲▲▲▲
+
+  const app = document.getElementById('app');
+  const splash = document.getElementById('splash');
+  if (!/^https:\/\/script\.google\.com\/.+\/exec/.test(APP_URL)) {
+    document.getElementById('msg').className = 'err';
+    document.getElementById('msg').textContent = 'index.html の APP_URL に、出品登録アプリのURL（/exec で終わるもの）を入れてください。';
+  } else {
+    app.addEventListener('load', () => splash.classList.add('hide'));
+    app.src = APP_URL;
+    // 念のため、読み込みに時間がかかっても8秒で画面を出す
+    setTimeout(() => splash.classList.add('hide'), 8000);
+  }
+</script>
+</body>
+</html>
