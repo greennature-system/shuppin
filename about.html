@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>出品管理ツール</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="icon-192.png">
+<style>
+  :root { --bg: #f6f3ec; --ink: #1f1c16; --muted: #6f685a; --line: #ddd5c4; --accent: #2f6b3a; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #191712; --ink: #ece6d8; --muted: #a59c89; --line: #3b352b; --accent: #86c793; } }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.85 -apple-system, "Hiragino Sans", "Yu Gothic UI", Meiryo, sans-serif; padding: 0 16px 64px; }
+  main { max-width: 720px; margin: 0 auto; }
+  header { padding: 40px 0 20px; border-bottom: 2px solid var(--ink); display: flex; gap: 16px; align-items: center; }
+  header img { width: 56px; height: 56px; border-radius: 14px; }
+  h1 { font-size: 26px; margin: 0; line-height: 1.3; }
+  h2 { font-size: 18px; margin: 32px 0 8px; }
+  p, li { color: var(--ink); }
+  .sub { color: var(--muted); font-size: 14px; margin: 4px 0 0; }
+  ul { padding-left: 1.3em; }
+  footer { margin-top: 48px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="icon-192.png" alt="">
+    <div>
+      <h1>出品管理ツール</h1>
+      <p class="sub">Greennature 社内用のヤフオク出品・発送の管理ツール</p>
+    </div>
+  </header>
+
+  <h2>このツールについて</h2>
+  <p>Greennature の従業員が、ヤフオク!への出品と発送の作業を管理するための社内向けツールです。一般の方向けのサービスではありません。利用には社内で共有している合言葉が必要です。</p>
+
+  <h2>できること</h2>
+  <ul>
+    <li>スマートフォンで商品の写真・状態・メモを登録する</li>
+    <li>登録した内容をもとに、出品用のタイトル・説明文・出品データを作る</li>
+    <li>発送の状況や、日ごと・月ごとの件数と売上を確認する</li>
+  </ul>
+
+  <h2>使うGoogleのサービス</h2>
+  <p>このツールは Google Apps Script で動いており、運営者の Google アカウントのスプレッドシートと Google ドライブに、商品の情報と写真を保存します。</p>
+
+  <footer>
+    <a href="privacy.html">プライバシーポリシー</a> ・ お問い合わせ：greennature.system@gmail.com
+  </footer>
+</main>
+</body>
+</html>
