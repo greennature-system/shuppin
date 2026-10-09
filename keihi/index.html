@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>経費精算</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="経費精算">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#f3ede2">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+  /* 経費精算アプリの入口（出品アプリの entrance と同じ作り）。ホーム画面に追加するとアイコンで開け、
+     Googleのアカウントが複数あるSafariでも開ける（アプリをこのページの中に読み込むため） */
+  html, body { margin: 0; height: 100%; background: #f3ede2; }
+  body { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); display: flex; flex-direction: column; }
+  iframe { flex: 1; width: 100%; border: 0; background: #f3ede2; display: block; }
+  .splash { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 18px; background: #f3ede2; color: #8a8375; font: 14px -apple-system, "Hiragino Sans", sans-serif; transition: opacity .3s; }
+  .splash img { width: 96px; height: 96px; border-radius: 22px; }
+  .splash.hide { opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+<iframe id="app" title="経費精算" allow="camera; clipboard-write"></iframe>
+<div class="splash" id="splash">
+  <img src="apple-touch-icon.png" alt="">
+  <div>読み込み中…</div>
+</div>
+<script>
+  // 経費精算アプリ（Apps Script の Webアプリ。/exec で終わるもの）
+  const APP_URL = 'https://script.google.com/macros/s/AKfycbwj8-r6p0FSxqkEsVU5fs9W_7RvZ9V0JnCQwsPlEosTfoGo4iOzvneJcCPqYU95c5g1/exec';
+  const app = document.getElementById('app'), splash = document.getElementById('splash');
+  app.addEventListener('load', () => splash.classList.add('hide'));
+  app.src = APP_URL;
+  setTimeout(() => splash.classList.add('hide'), 8000); // 読み込みに時間がかかっても8秒で画面を出す
+</script>
+</body>
+</html>
