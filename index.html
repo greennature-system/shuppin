@@ -56,7 +56,7 @@
   // アプリ（中の枠）が覚えたい値を、このページにも覚えておく（2026-10-10〜）。
   // iPhoneのSafariは枠の中で覚えた値をすぐ消すため、合言葉を毎回聞かれていた。アプリが開いた時に、ここから渡す
   const KEEP = /^shuppin_(pin|photographer|device|theme|basis|chart|draft_.+)$/;
-  const fromApp = o => /^https:\/\/[a-z0-9-]+\.script\.googleusercontent\.com$/.test(o);
+  const fromApp = o => /^https:\/\/[a-z0-9-]+\.googleusercontent\.com$/.test(o); // 例 n-…-0lu-script.googleusercontent.com
   window.addEventListener('message', e => {
     const d = e.data;
     if (!fromApp(e.origin) || !d || d.shuppin !== 1) return;
