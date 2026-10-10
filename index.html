@@ -52,6 +52,24 @@
     // 念のため、読み込みに時間がかかっても8秒で画面を出す
     setTimeout(() => splash.classList.add('hide'), 8000);
   }
+
+  // アプリ（中の枠）が覚えたい値を、このページにも覚えておく（2026-10-10〜）。
+  // iPhoneのSafariは枠の中で覚えた値をすぐ消すため、合言葉を毎回聞かれていた。アプリが開いた時に、ここから渡す
+  const KEEP = /^shuppin_(pin|photographer|device|theme|basis|chart|draft_.+)$/;
+  const fromApp = o => /^https:\/\/[a-z0-9-]+\.script\.googleusercontent\.com$/.test(o);
+  window.addEventListener('message', e => {
+    const d = e.data;
+    if (!fromApp(e.origin) || !d || d.shuppin !== 1) return;
+    try {
+      if (d.op === 'load') {
+        const all = {};
+        for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (KEEP.test(k)) all[k] = localStorage.getItem(k); }
+        e.source.postMessage({ shuppin: 1, op: 'loaded', all }, e.origin);
+      } else if (d.op === 'set' && KEEP.test(d.k)) {
+        if (d.v) localStorage.setItem(d.k, String(d.v)); else localStorage.removeItem(d.k);
+      }
+    } catch (err) {}
+  });
 </script>
 </body>
 </html>
