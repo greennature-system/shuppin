@@ -2,74 +2,45 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>出品登録</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>出品登録（業務アプリに移りました）</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="出品登録">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#0b0d12">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="icon-192.png">
-<link rel="manifest" href="manifest.webmanifest">
 <style>
-  html, body { margin: 0; height: 100%; background: #0b0d12; }
-  body {
-    box-sizing: border-box;
-    padding-top: env(safe-area-inset-top, 0px);   /* 画面上の時計・電池の下から表示する */
-    display: flex; flex-direction: column;
-  }
-  iframe { flex: 1; width: 100%; border: 0; background: #fff; display: block; }
-  .splash {
-    position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 18px; background: #0b0d12; color: #9aa0ad; font: 14px -apple-system, "Hiragino Sans", sans-serif;
-    transition: opacity .3s;
-  }
-  .splash img { width: 96px; height: 96px; border-radius: 22px; }
-  .splash.hide { opacity: 0; pointer-events: none; }
-  .err { color: #ff8a1f; text-align: center; padding: 0 24px; line-height: 1.7; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif; background:#f3ede2; color:#1f1c16; }
+  main { max-width:480px; margin:0 auto; padding:calc(env(safe-area-inset-top, 0px) + 32px) 20px 40px; }
+  img { width:72px; height:72px; border-radius:16px; display:block; }
+  h1 { font-size:20px; margin:16px 0 8px; }
+  p, li { font-size:15px; line-height:1.7; }
+  .go { display:block; text-align:center; background:#171512; color:#fff; text-decoration:none; font-weight:700; font-size:18px; padding:16px; border-radius:12px; margin:18px 0 8px; }
+  .url { text-align:center; color:#8a8375; font-size:13px; word-break:break-all; }
+  ol { padding-left:1.3em; }
+  .sub { color:#8a8375; font-size:13px; }
 </style>
 </head>
 <body>
-<iframe id="app" title="出品登録" allow="camera; clipboard-write"></iframe>
-<div class="splash" id="splash">
+<main>
   <img src="apple-touch-icon.png" alt="">
-  <div id="msg">読み込み中…</div>
-</div>
+  <h1>出品登録は「業務アプリ」に移りました</h1>
+  <p>出品の番号取り・撮影・出品確認・発送チェックなどは、新しい「業務アプリ」で行います。経費精算も同じアプリに入っています。</p>
+  <a class="go" id="go" href="https://shuppin.greennature.workers.dev/" target="_blank" rel="noopener">業務アプリを開く</a>
+  <div class="url">https://shuppin.greennature.workers.dev/</div>
+  <p><b>ホーム画面のアイコンを入れ直してください</b></p>
+  <ol>
+    <li>上のボタンで業務アプリを開く（Safari で開きます）</li>
+    <li>下の共有ボタン（□に↑）→「ホーム画面に追加」</li>
+    <li>このアイコン（古い「出品登録」）は、長押しして「Appを削除」</li>
+  </ol>
+  
+  <p class="sub">名前と暗証番号は今までと同じです。</p>
+</main>
 <script>
-  // ▼▼▼ ここに出品登録アプリのURL（…/exec で終わるもの）を貼る ▼▼▼
-  const APP_URL = 'https://script.google.com/macros/s/AKfycbywzqR7crqZ9otSJIY5dQ5JyRdlijuNXT-WZ2NZFT_Lc8yg0CWtBY35HmtXGFW1yK95hQ/exec';
-  // ▲▲▲▲▲▲
-
-  const app = document.getElementById('app');
-  const splash = document.getElementById('splash');
-  if (!/^https:\/\/script\.google\.com\/.+\/exec/.test(APP_URL)) {
-    document.getElementById('msg').className = 'err';
-    document.getElementById('msg').textContent = 'index.html の APP_URL に、出品登録アプリのURL（/exec で終わるもの）を入れてください。';
-  } else {
-    app.addEventListener('load', () => splash.classList.add('hide'));
-    app.src = APP_URL;
-    // 念のため、読み込みに時間がかかっても8秒で画面を出す
-    setTimeout(() => splash.classList.add('hide'), 8000);
-  }
-
-  // アプリ（中の枠）が覚えたい値を、このページにも覚えておく（2026-10-10〜）。
-  // iPhoneのSafariは枠の中で覚えた値をすぐ消すため、合言葉を毎回聞かれていた。アプリが開いた時に、ここから渡す
-  const KEEP = /^shuppin_(pin|photographer|device|theme|basis|chart|draft_.+)$/;
-  const fromApp = o => /^https:\/\/[a-z0-9-]+\.googleusercontent\.com$/.test(o); // 例 n-…-0lu-script.googleusercontent.com
-  window.addEventListener('message', e => {
-    const d = e.data;
-    if (!fromApp(e.origin) || !d || d.shuppin !== 1) return;
-    try {
-      if (d.op === 'load') {
-        const all = {};
-        for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (KEEP.test(k)) all[k] = localStorage.getItem(k); }
-        e.source.postMessage({ shuppin: 1, op: 'loaded', all }, e.origin);
-      } else if (d.op === 'set' && KEEP.test(d.k)) {
-        if (d.v) localStorage.setItem(d.k, String(d.v)); else localStorage.removeItem(d.k);
-      }
-    } catch (err) {}
-  });
+  // 2026-10-12〜：入口は業務アプリへ案内するだけ。ふつうにブラウザで開いた時はそのまま移る。
+  // ホーム画面に追加したアイコンから開いた時は、その中では新しいアプリを追加できないので、案内を出す
+  var standalone = window.navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+  if (!standalone) location.replace(document.getElementById('go').href);
 </script>
 </body>
 </html>
