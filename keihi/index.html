@@ -2,41 +2,45 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>経費精算</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>経費精算（業務アプリに移りました）</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="経費精算">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#f3ede2">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="icon-192.png">
-<link rel="manifest" href="manifest.webmanifest">
 <style>
-  /* 経費精算アプリの入口（出品アプリの entrance と同じ作り）。ホーム画面に追加するとアイコンで開け、
-     Googleのアカウントが複数あるSafariでも開ける（アプリをこのページの中に読み込むため） */
-  html, body { margin: 0; height: 100%; background: #f3ede2; }
-  body { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); display: flex; flex-direction: column; }
-  iframe { flex: 1; width: 100%; border: 0; background: #f3ede2; display: block; }
-  .splash { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 18px; background: #f3ede2; color: #8a8375; font: 14px -apple-system, "Hiragino Sans", sans-serif; transition: opacity .3s; }
-  .splash img { width: 96px; height: 96px; border-radius: 22px; }
-  .splash.hide { opacity: 0; pointer-events: none; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif; background:#f3ede2; color:#1f1c16; }
+  main { max-width:480px; margin:0 auto; padding:calc(env(safe-area-inset-top, 0px) + 32px) 20px 40px; }
+  img { width:72px; height:72px; border-radius:16px; display:block; }
+  h1 { font-size:20px; margin:16px 0 8px; }
+  p, li { font-size:15px; line-height:1.7; }
+  .go { display:block; text-align:center; background:#171512; color:#fff; text-decoration:none; font-weight:700; font-size:18px; padding:16px; border-radius:12px; margin:18px 0 8px; }
+  .url { text-align:center; color:#8a8375; font-size:13px; word-break:break-all; }
+  ol { padding-left:1.3em; }
+  .sub { color:#8a8375; font-size:13px; }
 </style>
 </head>
 <body>
-<iframe id="app" title="経費精算" allow="camera; clipboard-write"></iframe>
-<div class="splash" id="splash">
+<main>
   <img src="apple-touch-icon.png" alt="">
-  <div>読み込み中…</div>
-</div>
+  <h1>経費精算は「業務アプリ」に移りました</h1>
+  <p>経費精算は、出品と同じ「業務アプリ」の「経費」のタブに入りました。</p>
+  <a class="go" id="go" href="https://shuppin.greennature.workers.dev/" target="_blank" rel="noopener">業務アプリを開く</a>
+  <div class="url">https://shuppin.greennature.workers.dev/</div>
+  <p><b>ホーム画面のアイコンを入れ直してください</b></p>
+  <ol>
+    <li>上のボタンで業務アプリを開く（Safari で開きます）</li>
+    <li>下の共有ボタン（□に↑）→「ホーム画面に追加」</li>
+    <li>このアイコン（古い「経費精算」）は、長押しして「Appを削除」</li>
+  </ol>
+  <p class="sub">東京の人など、経費精算だけを使う人は <a href="https://shuppin.greennature.workers.dev/keihi.html" target="_blank" rel="noopener">経費精算だけの画面</a> を開いて、同じようにホーム画面に追加してください。</p>
+  <p class="sub">名前と暗証番号は今までと同じです。</p>
+</main>
 <script>
-  // 経費精算アプリ（Apps Script の Webアプリ。/exec で終わるもの）
-  const APP_URL = 'https://script.google.com/macros/s/AKfycbwj8-r6p0FSxqkEsVU5fs9W_7RvZ9V0JnCQwsPlEosTfoGo4iOzvneJcCPqYU95c5g1/exec';
-  const app = document.getElementById('app'), splash = document.getElementById('splash');
-  app.addEventListener('load', () => splash.classList.add('hide'));
-  app.src = APP_URL;
-  setTimeout(() => splash.classList.add('hide'), 8000); // 読み込みに時間がかかっても8秒で画面を出す
+  // 2026-10-12〜：入口は業務アプリへ案内するだけ。ふつうにブラウザで開いた時はそのまま移る。
+  // ホーム画面に追加したアイコンから開いた時は、その中では新しいアプリを追加できないので、案内を出す
+  var standalone = window.navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+  if (!standalone) location.replace(document.getElementById('go').href);
 </script>
 </body>
 </html>
